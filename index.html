@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Aura — Modern Lifestyle Store</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+
+    <!-- Feather icons (tiny) -->
+    <script src="https://unpkg.com/feather-icons"></script>
+
+    <!-- Meta for social cards -->
+    <meta property="og:title" content="Aura — Modern Lifestyle Store" />
+    <meta property="og:description" content="Minimalist, sustainable essentials for everyday life." />
+    <meta property="og:image"
+        content="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=1200&q=80" />
+
+    <style>
+        /* ==========  CSS VARIABLES (theme) ========== */
+        :root {
+            --bg: #fafafa;
+            --bg-soft: #f5f5f5;
+            --text: #111;
+            --text-soft: #555;
+            --accent: #111;
+            --accent-soft: #e5e5e5;
+            --radius: 12px;
+            --shadow: 0 2px 8px rgba(0, 0, 0, .06);
+            --transition: .3s ease;
+            --max-width: 1200px;
+        }
+
+        /* auto dark mode */
+        @media (prefers-color-scheme:dark) {
+            :root {
+                --bg: #0d0d0d;
+                --bg-soft: #1a1a1a;
+                --text: #f5f5f5;
+                --text-soft: #a1a1a1;
+                --accent: #f5f5f5;
+                --accent-soft: #262626;
+            }
+        }
+
+        /* ==========  RESET  ========== */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+
+        button {
+            font-family: inherit;
+            background: none;
+            border: none;
+            cursor: pointer;
+        }
+
+        /* ==========  UTILITY  ========== */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: .4em;
+            padding: .9em 2em;
+            border-radius: 50px;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: var(--bg);
+        }
+
+        .btn-primary:hover {
+            filter: invert(.1);
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        /* ==========  HEADER  ========== */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 30;
+            background: var(--bg);
+            backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--accent-soft);
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 18px 0;
+        }
+
+        .logo {
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: -.02em;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 32px;
+            font-size: .95rem;
+            font-weight: 500;
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .header-icons svg {
+            width: 20px;
+            height: 20px;
+            stroke-width: 1.8;
+        }
+
+        .cart-count {
+            background: var(--accent);
+            color: var(--bg);
+            font-size: .7rem;
+            font-weight: 600;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            display: grid;
+            place-items: center;
+            margin-left: -10px;
+            margin-top: -10px;
+        }
+
+        /* ==========  HERO  ========== */
+        .hero {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            margin-top: 100px;
+            min-height: 75vh;
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.4rem, 5vw, 3.2rem);
+            font-weight: 700;
+            letter-spacing: -.02em;
+            line-height: 1.15;
+        }
+
+        .hero-text p {
+            margin: 1.2rem 0 2rem;
+            max-width: 420px;
+            color: var(--text-soft);
+        }
+
+        .hero-img {
+            position: relative;
+            border-radius: var(--radius);
+            overflow: hidden;
+            aspect-ratio: 4 / 5;
+            box-shadow: var(--shadow);
+        }
+
+        .hero-img img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 1.2s ease;
+        }
+
+        .hero-img:hover img {
+            transform: scale(1.05);
+        }
+
+        /* ==========  FEATURE GRID  ========== */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: var(--bg-soft);
+            border-radius: var(--radius);
+            padding: 32px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+        }
+
+        .feature-card svg {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 20px;
+            stroke-width: 1.5;
+            color: var(--accent);
+        }
+
+        .feature-card h3 {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: .6rem;
+        }
+
+        /* ==========  PRODUCT CAROUSEL  ========== */
+        .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 48px;
+        }
+
+        .section-head h2 {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .carousel {
+            display: flex;
+            gap: 24px;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            padding-bottom: 12px;
+        }
+
+        .carousel::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .carousel::-webkit-scrollbar-thumb {
+            background: var(--accent-soft);
+            border-radius: 10px;
+        }
+
+        .product-card {
+            flex: 0 0 280px;
+            scroll-snap-align: start;
+            background: var(--bg-soft);
+            border-radius: var(--radius);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: var(--transition);
+        }
+
+        .product-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .product-card img {
+            aspect-ratio: 4/3;
+            object-fit: cover;
+        }
+
+        .product-info {
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .product-info h4 {
+            font-weight: 600;
+        }
+
+        .product-info .price {
+            font-weight: 500;
+            color: var(--text-soft);
+        }
+
+        /* Add-to-cart micro-interaction */
+        .product-card .add {
+            margin: 0 20px 20px;
+            padding: .6em 1.2em;
+            border-radius: 50px;
+            background: var(--accent);
+            color: var(--bg);
+            font-size: .85rem;
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .product-card:hover .add {
+            opacity: 1;
+        }
+
+        /* ==========  NEWSLETTER  ========== */
+        .newsletter {
+            background: var(--accent-soft);
+            padding: 80px 20px;
+            text-align: center;
+        }
+
+        .newsletter h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: .8em;
+        }
+
+        .newsletter p {
+            color: var(--text-soft);
+            margin-bottom: 2em;
+        }
+
+        .newsletter form {
+            display: flex;
+            max-width: 420px;
+            margin: 0 auto;
+            border-radius: 50px;
+            overflow: hidden;
+            background: var(--bg);
+            box-shadow: var(--shadow);
+        }
+
+        .newsletter input {
+            flex: 1;
+            border: none;
+            padding: 0 24px;
+            font-size: 1rem;
+            background: transparent;
+            color: var(--text);
+        }
+
+        .newsletter input::placeholder {
+            color: var(--text-soft);
+        }
+
+        .newsletter button {
+            padding: 0 28px;
+            height: 48px;
+            background: var(--accent);
+            color: var(--bg);
+            font-weight: 600;
+        }
+
+        /* ==========  FOOTER  ========== */
+        footer {
+            padding: 60px 0 40px;
+            border-top: 1px solid var(--accent-soft);
+            font-size: .9rem;
+            color: var(--text-soft);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-grid h4 {
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+
+        .footer-grid ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer-grid a:hover {
+            color: var(--text);
+        }
+
+        .social {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social svg {
+            transition: var(--transition);
+        }
+
+        .social svg:hover {
+            transform: scale(1.2);
+        }
+
+        .copyright {
+            margin-top: 40px;
+            text-align: center;
+            font-size: .85rem;
+        }
+
+        /* ==========  MEDIA QUERIES  ========== */
+        @media(max-width:768px) {
+            .hero {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text br {
+                display: none;
+            }
+
+            nav ul {
+                display: none;
+            }
+
+            /* simple mobile nav */
+        }
+    </style>
+</head>
+
+<body>
+    <!-- ==========  HEADER  ========== -->
+    <header>
+        <div class="container header-inner">
+            <a href="#" class="logo">Aura</a>
+
+            <nav>
+                <ul>
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Shop</a></li>
+                    <li><a href="#">Story</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="header-icons">
+                <i data-feather="search"></i>
+                <div style="position:relative;">
+                    <i data-feather="shopping-bag"></i>
+                    <div class="cart-count" id="cartCount">0</div>
+                </div>
+                <!-- hamburger icon for mobile nav can be added here -->
+            </div>
+        </div>
+    </header>
+
+    <!-- ==========  HERO  ========== -->
+    <section class="hero container">
+        <div class="hero-text">
+            <h1>Curated essentials<br />for a simpler life.</h1>
+            <p>Minimalist, sustainable and beautiful objects that spark joy every day.</p>
+            <a href="#shop" class="btn btn-primary">Shop the collection</a>
+        </div>
+
+        <div class="hero-img">
+            <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=800&q=80"
+                alt="Hero product" />
+        </div>
+    </section>
+
+    <!-- ==========  FEATURE GRID  ========== -->
+    <section class="section">
+        <div class="container">
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <i data-feather="truck"></i>
+                    <h3>Free shipping</h3>
+                    <p>On orders over $50</p>
+                </div>
+                <div class="feature-card">
+                    <i data-feather="shield"></i>
+                    <h3>2-year warranty</h3>
+                    <p>Peace of mind included</p>
+                </div>
+                <div class="feature-card">
+                    <i data-feather="refresh-cw"></i>
+                    <h3>30-day returns</h3>
+                    <p>No questions asked</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========  PRODUCT CAROUSEL  ========== -->
+    <section class="section" id="shop">
+        <div class="container">
+            <div class="section-head">
+                <h2>Best sellers</h2>
+                <a href="#" class="btn">View all</a>
+            </div>
+
+            <div class="carousel" id="carousel">
+                <!-- populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- ==========  NEWSLETTER  ========== -->
+    <section class="newsletter">
+        <div class="container">
+            <h2>Stay in the loop</h2>
+            <p>Be the first to know about new drops, offers and stories.</p>
+            <form onsubmit="handleSubscribe(event)">
+                <input type="email" placeholder="Enter your email" required />
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- ==========  FOOTER  ========== -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4>Shop</h4>
+                    <ul>
+                        <li><a href="#">New arrivals</a></li>
+                        <li><a href="#">Best sellers</a></li>
+                        <li><a href="#">Accessories</a></li>
+                        <li><a href="#">Sale</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Support</h4>
+                    <ul>
+                        <li><a href="#">Contact us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping & returns</a></li>
+                        <li><a href="#">Warranty</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="#">About</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4>Follow us</h4>
+                    <div class="social">
+                        <a href="#"><i data-feather="instagram"></i></a>
+                        <a href="#"><i data-feather="twitter"></i></a>
+                        <a href="#"><i data-feather="facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="copyright">
+                &copy; <span id="year"></span> Aura Inc. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <!-- ==========  SCRIPT  ========== -->
+    <script>
+        /* === Feather icons === */
+        feather.replace();
+
+        /* === Populate carousel === */
+        const products = [
+            { id: 1, name: "Terra Watch", price: 149, img: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=600&q=80" },
+            { id: 2, name: "Oak Desk Lamp", price: 89, img: "https://images.unsplash.com/photo-1513506003901-1e6a229e2d15?auto=format&fit=crop&w=600&q=80" },
+            { id: 3, name: "Canvas Tote", price: 45, img: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=600&q=80" },
+            { id: 4, name: "Ceramic Mug", price: 25, img: "https://images.unsplash.com/photo-1666445844615-0a3930270f13?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+            { id: 5, name: "Wireless Charger", price: 59, img: "https://images.unsplash.com/photo-1591290619618-904f6dd935e3?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" },
+        ];
+        const carousel = document.getElementById('carousel');
+        products.forEach(p => {
+            carousel.insertAdjacentHTML('beforeend', `
+        <div class="product-card">
+          <img src="${p.img}" alt="${p.name}">
+          <div class="product-info">
+            <h4>${p.name}</h4>
+            <span class="price">$${p.price}</span>
+          </div>
+          <button class="add" data-id="${p.id}">Add to cart</button>
+        </div>
+      `);
+        });
+
+        /* === cart count === */
+        let cart = [];
+        document.addEventListener('click', e => {
+            if (e.target.classList.contains('add')) {
+                cart.push(+e.target.dataset.id);
+                document.getElementById('cartCount').textContent = cart.length;
+            }
+        });
+
+        /* === newsletter === */
+        function handleSubscribe(e) {
+            e.preventDefault();
+            alert('Thanks! You’re subscribed.');
+            e.target.reset();
+        }
+
+        /* === year in footer === */
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+</body>
+
+</html>
